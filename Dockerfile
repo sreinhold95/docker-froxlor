@@ -11,7 +11,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-zip \
 	php-bcmath \
 	php-mysql \
-	mysql-client
+	mysql-client \
+	cron\
+	bind
 
 COPY froxlor /var/www/html/froxlor
 
