@@ -13,7 +13,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-mysql \
 	mysql-client \
 	cron\
-	bind
+	bind\
+	logrotate
 
 COPY froxlor /var/www/html/froxlor
 
