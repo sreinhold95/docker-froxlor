@@ -1,0 +1,63 @@
+version: '3.1'
+
+services:
+  froxlor:
+    image: "ricwein/froxlor"
+    restart: always
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.port: "80"
+        traefik.docker.network: "traefik"
+        traefik.frontend.rule: "Host:froxlor.r7s.de"
+        traefik.frontend.redirect.regex: ^(?:http://(?:www\\.){0,1}|https://www\\.)(.*)
+        traefik.frontend.redirect.replacement: "https://$$1"
+        traefik.frontend.redirect.permanent: "true"
+    depends_on:
+      - "traefik"
+    expose:
+     - 80
+    volumes:
+      - froxlor:/var/www/html/froxlor
+      #- froxlorbind:/etc/bind
+      #- froxlordomains:/etc/bind/domains
+    networks:
+     - traefik
+     - default
+    #links:
+    #  - db:database
+  db:
+    image: mariadb:latest
+    restart: always
+    networks:
+     - default
+    #env_file: db.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_USER}
+      MYSQL_USER: ${MYSQL_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_DATABASE}
+    
+volumes:
+  froxlor:
+    driver: local
+    driver_opts:
+        type: 'none'
+        o: 'bind'
+        device: '/opt/dockerdata/froxlor'
+  #froxlorbind:
+    #driver: local
+    #driver_opts:
+        #type: 'none'
+        #o: 'bind'
+        #device: '/opt/dockerdata/bind/bind/etc/'
+  #froxlordomains:
+    #driver: local
+    #driver_opts:
+        #type: 'none'
+        #o: 'bind'
+        #device: '/opt/dockerdata/bind/bind/lib/'
+networks:
+  traefik:
+    external: true
+  default:
