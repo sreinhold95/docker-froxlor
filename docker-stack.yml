@@ -2,14 +2,14 @@ version: '3.1'
 
 services:
   froxlor:
-    image: "ricwein/froxlor"
+    image: "sreinhold95/froxlor"
     restart: always
     deploy:
       labels:
         traefik.enable: "true"
         traefik.port: "80"
-        traefik.docker.network: "traefik"
-        traefik.frontend.rule: "Host:froxlor.r7s.de"
+        traefik.docker.network: "${traefik_network}"
+        traefik.frontend.rule: "Host:${hostname}"
         traefik.frontend.redirect.regex: ^(?:http://(?:www\\.){0,1}|https://www\\.)(.*)
         traefik.frontend.redirect.replacement: "https://$$1"
         traefik.frontend.redirect.permanent: "true"
@@ -22,7 +22,7 @@ services:
       #- froxlorbind:/etc/bind
       #- froxlordomains:/etc/bind/domains
     networks:
-     - traefik
+     - ${traefik_network}
      - default
     #links:
     #  - db:database
@@ -58,6 +58,6 @@ volumes:
         #o: 'bind'
         #device: '/opt/dockerdata/bind/bind/lib/'
 networks:
-  traefik:
+  ${traefik_network}:
     external: true
   default:
