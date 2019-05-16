@@ -21,7 +21,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 
 COPY froxlor /var/www/html/froxlor
 COPY logrotate-froxlor /etc/logrotate.d/froxlor
-COPY logd.froxlor /etc/cron.d/froxlor
+COPY crond.froxlor /etc/cron.d/froxlor
 
 RUN chmod 0644 "/etc/cron.d/froxlor"
 RUN chown root:root "/etc/cron.d/froxlor"
