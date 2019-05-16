@@ -15,7 +15,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	cron\
 	bind9\
 	logrotate\
-	anacron
+	anacron\
+	apt-utils
 
 COPY froxlor /var/www/html/froxlor
 COPY logrotate-froxlor /etc/logrotate.d/froxlor
