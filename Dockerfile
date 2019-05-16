@@ -14,7 +14,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	mysql-client \
 	cron\
 	bind\
-	logrotate
+	logrotate\
+	anacron
 
 COPY froxlor /var/www/html/froxlor
 COPY logrotate-froxlor /etc/logrotate.d/froxlor
