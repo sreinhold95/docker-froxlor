@@ -3,6 +3,7 @@ FROM debian:latest
 USER root
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+	apt-utils\
 	apache2 \
 	libapache2-mod-php7.0 \
 	php-xml \
@@ -15,8 +16,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	cron\
 	bind9\
 	logrotate\
-	anacron\
-	apt-utils
+	anacron
+	
 
 COPY froxlor /var/www/html/froxlor
 COPY logrotate-froxlor /etc/logrotate.d/froxlor
